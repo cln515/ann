@@ -27,9 +27,19 @@ add_library(ann
     pr_queue_k.h
 )
 
-install(TARGETS ann LIBRARY ARCHIVE DESTINATION lib)
+install(TARGETS ann 
+EXPORT ann_export
+LIBRARY ARCHIVE DESTINATION lib
+INCLUDES DESTINATION include 
+)
 install(DIRECTORY "" DESTINATION include/ann FILES_MATCHING PATTERN "ANN*.h")
 
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     install(FILES "${PROJECT_BINARY_DIR}/ann/CMakeFiles/ann.dir/ann.pdb" CONFIGURATIONS Debug DESTINATION lib)
 endif()
+
+install(EXPORT ann_export
+FILE ann-config.cmake
+DESTINATION cmake
+EXPORT_LINK_INTERFACE_LIBRARIES
+)
